@@ -100,8 +100,30 @@ class UserService {
 
     async updateUser(id, data) {
         console.log(data);
-        const user = await UserModel.findById(id);
-        console.log(user)
+
+        function validated(data) {
+
+            const validatedData = {};
+
+            Object.entries(data).map(([key, value]) => {
+                if([
+                    'first_name',
+                    'last_name',
+                    'middle_name',
+                    'username',
+                    'email',
+                    'phone',
+                    'birthday',
+                    'sex',
+                ].indexOf(key)) validatedData[key] = value;
+            })
+
+            return validatedData;
+        }
+
+        const user = await UserModel.findOneAndUpdate({_id: id}, validated(data));
+
+        return new UserDto(user);
     }
 }
 
