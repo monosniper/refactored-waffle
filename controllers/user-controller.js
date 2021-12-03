@@ -14,7 +14,7 @@ class UserController {
             const {username, email, password} = req.body;
             const userData = await UserService.register(username, email, password);
 
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "none", secure: true});
 
             return res.json(userData);
         } catch (e) {
@@ -27,7 +27,7 @@ class UserController {
             const {username, password} = req.body;
             const userData = await UserService.login(username, password);
 
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "none", secure: true});
 
             return res.json(userData);
         } catch (e) {
@@ -64,7 +64,7 @@ class UserController {
             const {refreshToken} = req.cookies;
             const userData = await UserService.refresh(refreshToken);
 
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "none", secure: true});
 
             return res.json(userData);
 
@@ -85,6 +85,15 @@ class UserController {
     async updateUser(req, res, next) {
         try {
             const user = await UserService.updateUser(req.params.id, req.body.data);
+            return res.json(user);
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async changePassword(req, res, next) {
+        try {
+            const user = await UserService.changePassword(req.params.id, {oldPassword: req.body.oldPassword, newPassword: req.body.newPassword});
             return res.json(user);
         } catch (e) {
             next(e)

@@ -95,11 +95,12 @@ class UserService {
 
     async getAllUsers() {
         const users = await UserModel.find();
-        return users;
+        const usersDtos = await users.map(user => new UserDto(user));
+        console.log(usersDtos)
+        return usersDtos;
     }
 
     async updateUser(id, data) {
-        console.log(data);
 
         function validated(data) {
 
@@ -115,13 +116,34 @@ class UserService {
                     'phone',
                     'birthday',
                     'sex',
-                ].indexOf(key)) validatedData[key] = value;
+                ].indexOf(key) !== -1) validatedData[key] = value;
             })
 
             return validatedData;
         }
 
-        const user = await UserModel.findOneAndUpdate({_id: id}, validated(data));
+        const user = await UserModel.findByIdAndUpdate(id, validated(data), {new: true});
+
+        return new UserDto(user);
+    }
+
+    async changePassword(id, data) {
+        const {oldPassword, newPassword} = data;
+        const user = await UserModel.findById(id);
+
+        if(oldPassword !== newPassword) {
+            const isPassEquals = await bcrypt.compare(oldPassword, user.password);
+
+            if(isPassEquals) {
+                user.password = await bcrypt.hash(newPassword, 1);
+                user.save();
+            } else {
+                throw ApiError.BadRequest('Старый пароль не верный');
+            }
+        } else {
+            throw ApiError.BadRequest('Новый пароль не может быть таким же как старый');
+        }
+
 
         return new UserDto(user);
     }
