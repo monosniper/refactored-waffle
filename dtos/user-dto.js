@@ -7,6 +7,7 @@ module.exports = class UserDto {
     phone;
     email;
     birthday;
+    balance;
     sex;
     isActivated;
     isAdmin;
@@ -20,6 +21,7 @@ module.exports = class UserDto {
         this.phone = model.phone;
         this.email = model.email;
         this.birthday = model.birthday;
+        this.balance = model.balance;
         this.sex = model.sex;
         this.isActivated = model.isActivated;
         this.isAdmin = model.isAdmin;

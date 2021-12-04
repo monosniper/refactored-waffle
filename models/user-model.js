@@ -9,10 +9,11 @@ const UserSchema = new Schema({
     middle_name: {type: String},
     password: {type: String, required: true},
     birthday: {type: Date},
+    balance: {type: Schema.Types.Number, default: 0},
     sex: {type: String, default: 'male'},
-    isActivated: {type: Boolean, default: false},
+    isVerified: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     activationLink: {type: String},
-});
+}, {timestamps: true});
 
 module.exports = model('User', UserSchema);

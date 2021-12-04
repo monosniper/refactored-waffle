@@ -15,7 +15,7 @@ class UserService {
 
         const hashPassword = await bcrypt.hash(password, 1);
         const activationLink = await uuid.v4();
-        console.log(username, email, password)
+
         const user = await UserModel.create({username, email, password: hashPassword, activationLink});
 
         // Send verification emails
@@ -96,7 +96,7 @@ class UserService {
     async getAllUsers() {
         const users = await UserModel.find();
         const usersDtos = await users.map(user => new UserDto(user));
-        console.log(usersDtos)
+
         return usersDtos;
     }
 
