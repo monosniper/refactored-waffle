@@ -22,6 +22,7 @@ app.use(cors({
 }));
 app.use('/api', router);
 app.use(errorMiddleware);
+app.use(express.static('uploads'));
 
 const start = async () => {
     try {

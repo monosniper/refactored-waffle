@@ -147,6 +147,12 @@ class UserService {
 
         return new UserDto(user);
     }
+
+    async setPendingForVerification(user_id) {
+        console.log(user_id)
+        const user = await UserModel.findByIdAndUpdate(user_id, {waitingForVerify: true}, {new: true});
+        return new UserDto(user);
+    }
 }
 
 

@@ -19,7 +19,9 @@ router.get('/refresh', UserController.refresh);
 
 router.get('/users', authMiddleware, UserController.getUsers);
 router.post('/users/:id/update', authMiddleware, UserController.updateUser);
-router.post('/users/:id/changePassword', authMiddleware, UserController.changePassword);
+router.post('/users/:id/change-password', authMiddleware, UserController.changePassword);
+router.get('/users/:id/set-pending-for-verification', authMiddleware, UserController.setPendingForVerification);
+router.get('/users/:id/verification-images', authMiddleware, UserController.getVerificationImages);
 
 router.get('/cassa/pulls', authMiddleware, CassaController.getPulls);
 router.post('/cassa/pull', authMiddleware, CassaController.createPull);

@@ -9,7 +9,8 @@ module.exports = class UserDto {
     birthday;
     balance;
     sex;
-    isActivated;
+    waitingForVerify;
+    isVerified;
     isAdmin;
 
     constructor(model) {
@@ -23,7 +24,8 @@ module.exports = class UserDto {
         this.birthday = model.birthday;
         this.balance = model.balance;
         this.sex = model.sex;
-        this.isActivated = model.isActivated;
+        this.waitingForVerify = model.waitingForVerify;
+        this.isVerified = model.isVerified;
         this.isAdmin = model.isAdmin;
     }
 }

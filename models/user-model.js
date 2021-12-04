@@ -11,6 +11,7 @@ const UserSchema = new Schema({
     birthday: {type: Date},
     balance: {type: Schema.Types.Number, default: 0},
     sex: {type: String, default: 'male'},
+    waitingForVerify: {type: Boolean, default: false},
     isVerified: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     activationLink: {type: String},

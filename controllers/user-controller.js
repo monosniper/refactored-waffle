@@ -1,6 +1,7 @@
 const UserService = require('../services/user-service');
 const ApiError = require("../exceptions/api-error");
 const {validationResult} = require('express-validator');
+const fs = require("fs");
 
 class UserController {
     async register(req, res, next) {
@@ -95,6 +96,36 @@ class UserController {
         try {
             const user = await UserService.changePassword(req.params.id, {oldPassword: req.body.oldPassword, newPassword: req.body.newPassword});
             return res.json(user);
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async setPendingForVerification(req, res, next) {
+        try {
+            const user = await UserService.setPendingForVerification(req.params.id);
+            return res.json(user);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getVerificationImages(req, res, next) {
+        try {
+
+            const id = req.params.id;
+
+            const passportImages = fs.readdirSync(`uploads/${id}/verification/passport`, {withFileTypes: true}).map(file => file.name);
+            const selphieImages = fs.readdirSync(`uploads/${id}/verification/selphie`, {withFileTypes: true}).map(file => file.name);
+            const innImages = fs.readdirSync(`uploads/${id}/verification/inn`, {withFileTypes: true}).map(file => file.name);
+
+            return res.json([
+                {
+                    'passport': passportImages,
+                    'selphie': selphieImages,
+                    'inn': innImages,
+                }
+            ]);
         } catch (e) {
             next(e)
         }
