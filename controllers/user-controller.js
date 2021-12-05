@@ -153,9 +153,7 @@ class UserController {
 
     async payEvent(req, res, next) {
         try {
-            console.log(req.params);
-            console.log(req.body);
-            console.log(req.body.WMI_MERCHANT_ID);
+            console.log(req);
             return res.send('WMI_RESULT=OK');
         } catch (e) {
             next(e)
