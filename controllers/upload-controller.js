@@ -32,7 +32,7 @@ class UploadController {
 
     async getSongs(req, res, next) {
         try {
-            return res.json(fs.readdirSync(`uploads/player`, {withFileTypes: true}).map(file => file.name));
+            return res.json(fs.existsSync('uploads/player') ? fs.readdirSync(`uploads/player`, {withFileTypes: true}).map(file => file.name) : []);
         } catch (e) {
             next(e);
         }
