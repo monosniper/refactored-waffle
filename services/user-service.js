@@ -149,8 +149,21 @@ class UserService {
     }
 
     async setPendingForVerification(user_id) {
-        console.log(user_id)
         const user = await UserModel.findByIdAndUpdate(user_id, {waitingForVerify: true}, {new: true});
+        return new UserDto(user);
+    }
+
+    async acceptUserVerification(user_id) {
+        const user = await UserModel.findByIdAndUpdate(user_id, {waitingForVerify: false, isVerified: true}, {new: true});
+        await MailService.sendAcceptVerificationMail(user.email, `${user.last_name} ${user.first_name} ${user.middle_name}`);
+
+        return new UserDto(user);
+    }
+
+    async rejectUserVerification(user_id) {
+        const user = await UserModel.findByIdAndUpdate(user_id, {waitingForVerify: false, isVerified: false}, {new: true});
+        await MailService.sendRejectVerificationMail(user.email, `${user.last_name} ${user.first_name} ${user.middle_name}`);
+
         return new UserDto(user);
     }
 }

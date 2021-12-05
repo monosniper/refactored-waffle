@@ -1,5 +1,7 @@
 const ApiError = require("../exceptions/api-error");
 const del = require('del');
+const fs = require("fs");
+const {toBoolean} = require("validator");
 
 class UploadController {
     async uploadFiles(req, res, next) {
@@ -7,7 +9,7 @@ class UploadController {
             if(!req.files) {
                 return next(ApiError.BadRequest('Нет файлов для загрузки'));
             } else {
-                await del(`./uploads/${req.body.dir}`);
+                toBoolean(req.body.del)  && await del(`./uploads/${req.body.dir}`);
 
                 let file = req.files.file;
 
@@ -23,6 +25,26 @@ class UploadController {
                     }
                 });
             }
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getSongs(req, res, next) {
+        try {
+            return res.json(fs.readdirSync(`uploads/player`, {withFileTypes: true}).map(file => file.name));
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async deleteSong(req, res, next) {
+        try {
+            const song = req.params.song;
+
+            await fs.unlinkSync('./uploads/player/' + song);
+
+            return res.sendStatus(200);
         } catch (e) {
             next(e);
         }

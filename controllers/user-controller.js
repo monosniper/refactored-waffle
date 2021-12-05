@@ -130,6 +130,35 @@ class UserController {
             next(e)
         }
     }
+
+    async acceptUserVerification(req, res, next) {
+        try {
+            const user = await UserService.acceptUserVerification(req.params.id);
+
+            return res.json(user);
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async rejectUserVerification(req, res, next) {
+        try {
+            const user = await UserService.rejectUserVerification(req.params.id);
+
+            return res.json(user);
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async payEvent(req, res, next) {
+        try {
+            console.log(req.body);
+            return res.sendStatus(200);
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new UserController();

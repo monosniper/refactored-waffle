@@ -22,6 +22,8 @@ router.post('/users/:id/update', authMiddleware, UserController.updateUser);
 router.post('/users/:id/change-password', authMiddleware, UserController.changePassword);
 router.get('/users/:id/set-pending-for-verification', authMiddleware, UserController.setPendingForVerification);
 router.get('/users/:id/verification-images', authMiddleware, UserController.getVerificationImages);
+router.get('/users/:id/verification/accept', authMiddleware, UserController.acceptUserVerification);
+router.get('/users/:id/verification/reject', authMiddleware, UserController.rejectUserVerification);
 
 router.get('/cassa/pulls', authMiddleware, CassaController.getPulls);
 router.post('/cassa/pull', authMiddleware, CassaController.createPull);
@@ -30,5 +32,10 @@ router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransac
 router.post('/cassa/transactions/:id/update', authMiddleware, CassaController.updateTransaction);
 
 router.post('/upload', authMiddleware, UploadController.uploadFiles);
+
+router.get('/player/songs', authMiddleware, UploadController.getSongs);
+router.delete('/player/songs/:song', authMiddleware, UploadController.deleteSong);
+
+router.post('/pay-event', authMiddleware, UserController.payEvent);
 
 module.exports = router;
