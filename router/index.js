@@ -36,6 +36,6 @@ router.post('/upload', authMiddleware, UploadController.uploadFiles);
 router.get('/player/songs', authMiddleware, UploadController.getSongs);
 router.delete('/player/songs/:song', authMiddleware, UploadController.deleteSong);
 
-router.post('/pay-event', authMiddleware, UserController.payEvent);
+router.post('/pay-event', UserController.payEvent);
 
 module.exports = router;
