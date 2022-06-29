@@ -2,6 +2,7 @@ const Router = require('express').Router;
 const UserController = require('../controllers/user-controller');
 const CassaController = require('../controllers/cassa-controller');
 const UploadController = require('../controllers/upload-controller');
+const GameController = require('../controllers/game-controller');
 const {body} = require('express-validator');
 const authMiddleware = require('../middlewares/auth-middleware');
 
@@ -32,6 +33,10 @@ router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransac
 router.post('/cassa/transactions/:id/update', authMiddleware, CassaController.updateTransaction);
 
 router.post('/upload', authMiddleware, UploadController.uploadFiles);
+
+router.get('/games', GameController.getGames);
+router.post('/game', authMiddleware, GameController.createGame);
+router.delete('/games/:slug', authMiddleware, GameController.deleteGame);
 
 router.get('/player/songs', authMiddleware, UploadController.getSongs);
 router.delete('/player/songs/:song', authMiddleware, UploadController.deleteSong);
