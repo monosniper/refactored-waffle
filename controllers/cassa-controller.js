@@ -43,6 +43,15 @@ class CassaController {
         }
     }
 
+    async getPayHistory(req, res, next) {
+        try {
+            const transactions = await CassaService.getPayHistory(req.user.id);
+            return res.json(transactions);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async updateTransaction(req, res, next) {
         try {
             const response = await CassaService.updateTransaction(req.params.id, req.body.data);

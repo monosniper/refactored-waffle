@@ -28,6 +28,7 @@ router.get('/users/:id/verification/reject', authMiddleware, UserController.reje
 
 router.get('/cassa/pulls', authMiddleware, CassaController.getPulls);
 router.post('/cassa/pull', authMiddleware, CassaController.createPull);
+router.get('/cassa/pay_history', authMiddleware, CassaController.getPayHistory);
 router.get('/cassa/transactions', authMiddleware, CassaController.getTransactions);
 router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransaction);
 router.post('/cassa/transactions/:id/update', authMiddleware, CassaController.updateTransaction);

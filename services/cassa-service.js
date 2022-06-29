@@ -56,6 +56,12 @@ class CassaService {
         return transaction;
     }
 
+    async getPayHistory(id) {
+        const transactions = await TransactionModel.find({user: id}).populate('user')
+        ;
+        return transactions;
+    }
+
     async getAllFakePushs() {
         const fakePushs = await TransactionModel.find().populate('user');
         return fakePushs;
