@@ -9,6 +9,10 @@ const ApiError = require('../exceptions/api-error');
 
 class UserService {
     async register(username, email, password) {
+        if (await UserModel.findOne({username})) {
+            throw ApiError.BadRequest('Пользователь с данным логином уже существует');
+        }
+
         if (await UserModel.findOne({email})) {
             throw ApiError.BadRequest('Пользователь с данным E-mail уже существует');
         }
