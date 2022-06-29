@@ -55,6 +55,11 @@ class CassaService {
 
         return transaction;
     }
+
+    async getAllFakePushs() {
+        const fakePushs = await TransactionModel.find().populate('user');
+        return fakePushs;
+    }
 }
 
 module.exports = new CassaService()

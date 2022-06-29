@@ -31,6 +31,7 @@ router.post('/cassa/pull', authMiddleware, CassaController.createPull);
 router.get('/cassa/transactions', authMiddleware, CassaController.getTransactions);
 router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransaction);
 router.post('/cassa/transactions/:id/update', authMiddleware, CassaController.updateTransaction);
+router.get('/cassa/fake/pushs', authMiddleware, CassaController.getAllFakePushs);
 
 router.post('/upload', authMiddleware, UploadController.uploadFiles);
 

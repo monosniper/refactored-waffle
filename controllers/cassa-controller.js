@@ -52,6 +52,15 @@ class CassaController {
             next(e);
         }
     }
+
+    async getAllFakePushs(req, res, next) {
+        try {
+            const pushs = await CassaService.getAllFakePushs();
+            return res.json(pushs);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new CassaController();
