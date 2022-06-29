@@ -18,7 +18,7 @@ class MailService {
     }
 
     async sendActivationMail(to, link) {
-        await this.transporter.sendMail({
+        return await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
             subject: 'Верификация аккаунта на ' + process.env.API_URL,
@@ -34,7 +34,7 @@ class MailService {
     }
 
     async sendAcceptVerificationMail(to, name) {
-        await this.transporter.sendMail({
+        return await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
             subject: 'Верификация аккаунта на ' + process.env.CLIENT_URL,
@@ -49,7 +49,7 @@ class MailService {
     }
 
     async sendRejectVerificationMail(to, name, link) {
-        await this.transporter.sendMail({
+        return await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
             subject: 'Верификация аккаунта на ' + process.env.CLIENT_URL,
