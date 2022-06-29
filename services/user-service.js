@@ -23,16 +23,16 @@ class UserService {
         const user = await UserModel.create({username, email, password: hashPassword, activationLink});
 
         // Send verification emails
-        await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        return MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`).finally(async () => {
+            const userDto = new UserDto(user);
+            const tokens = await TokenService.generateTokens({...userDto});
 
-        const userDto = new UserDto(user);
-        const tokens = await TokenService.generateTokens({...userDto});
+            await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
-        await TokenService.saveToken(userDto.id, tokens.refreshToken);
-
-        return {
-            ...tokens, user: userDto
-        };
+            return {
+                ...tokens, user: userDto
+            };
+        });
     }
 
     async login(username, password) {
