@@ -101,6 +101,15 @@ class UserController {
         }
     }
 
+    async resetPassword(req, res, next) {
+        try {
+            const user = await UserService.resetPassword(req.params.id);
+            return res.json(user);
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async setPendingForVerification(req, res, next) {
         try {
             const user = await UserService.setPendingForVerification(req.params.id);

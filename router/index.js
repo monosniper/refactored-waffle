@@ -21,6 +21,7 @@ router.get('/refresh', UserController.refresh);
 router.get('/users', authMiddleware, UserController.getUsers);
 router.post('/users/:id/update', authMiddleware, UserController.updateUser);
 router.post('/users/:id/change-password', authMiddleware, UserController.changePassword);
+router.get('/users/:id/reset-password', authMiddleware, UserController.resetPassword);
 router.get('/users/:id/set-pending-for-verification', authMiddleware, UserController.setPendingForVerification);
 router.get('/users/:id/verification-images', authMiddleware, UserController.getVerificationImages);
 router.get('/users/:id/verification/accept', authMiddleware, UserController.acceptUserVerification);
@@ -37,11 +38,11 @@ router.get('/cassa/fake/pushs', authMiddleware, CassaController.getAllFakePushs)
 router.post('/upload', authMiddleware, UploadController.uploadFiles);
 
 router.get('/games', GameController.getGames);
-router.post('/game', authMiddleware, GameController.createGame);
-router.delete('/games/:slug', authMiddleware, GameController.deleteGame);
+router.post('/game', GameController.createGame);
+router.delete('/games/:slug', GameController.deleteGame);
 
-router.get('/player/songs', authMiddleware, UploadController.getSongs);
-router.delete('/player/songs/:song', authMiddleware, UploadController.deleteSong);
+router.get('/player/songs', UploadController.getSongs);
+router.delete('/player/songs/:song', UploadController.deleteSong);
 
 router.post('/pay-event', UserController.payEvent);
 

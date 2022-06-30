@@ -6,6 +6,7 @@ const MailService = require('./mail-service');
 const TokenService = require('./token-service');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error');
+const generatePassword = require('password-generator');
 
 class UserService {
     async register(username, email, password) {
@@ -152,6 +153,23 @@ class UserService {
             throw ApiError.BadRequest('Новый пароль не может быть таким же как старый');
         }
 
+
+        return new UserDto(user);
+    }
+
+    async resetPassword(id) {
+        const user = await UserModel.findById(id);
+
+        const newPassword = generatePassword(12)
+
+        user.password = await bcrypt.hash(newPassword, 1);
+        user.save();
+
+        try {
+            await MailService.sendResetPasswordMail(user.email, user.username, newPassword)
+        } catch (e) {
+            console.log(e)
+        }
 
         return new UserDto(user);
     }
