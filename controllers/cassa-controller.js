@@ -23,9 +23,30 @@ class CassaController {
         }
     }
 
+    async createCryptoTransaction(req, res, next) {
+        try {
+            const {transaction_number, amount, user_id} = req.body;
+            const response = await CassaService.createCryptoTransaction(transaction_number, amount, user_id);
+
+            return res.json([response]);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getTransactions(req, res, next) {
         try {
             const transactions = await CassaService.fetchTransactions();
+
+            return res.json([transactions]);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getCryptoTransactions(req, res, next) {
+        try {
+            const transactions = await CassaService.fetchCryptoTransactions();
 
             return res.json([transactions]);
         } catch (e) {

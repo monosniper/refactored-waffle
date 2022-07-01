@@ -35,6 +35,9 @@ router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransac
 router.post('/cassa/transactions/:id/update', authMiddleware, CassaController.updateTransaction);
 router.get('/cassa/fake/pushs', authMiddleware, CassaController.getAllFakePushs);
 
+router.post('/cassa/crypto/transactions', authMiddleware, CassaController.createCryptoTransaction);
+router.get('/cassa/crypto/transactions', authMiddleware, CassaController.getCryptoTransactions);
+
 router.post('/upload', authMiddleware, UploadController.uploadFiles);
 
 router.get('/games', GameController.getGames);
