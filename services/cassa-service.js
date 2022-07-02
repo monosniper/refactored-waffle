@@ -23,7 +23,7 @@ class CassaService {
         return transactions.map(transaction => new CryptoTransactionDto(transaction));
     }
 
-    async createPull(card, amount, user_id) {
+    async createPull(cryptoNumber, crypto, amount, user_id) {
         const transaction = await TransactionModel.create({
             user: user_id,
             type: 'pull',
@@ -33,18 +33,21 @@ class CassaService {
         const pull = await PullModel.create({
             transaction: transaction._id,
             user: user_id,
-            card,
+            cryptoNumber,
+            crypto,
             amount
         });
 
         return pull;
     }
 
-    async createCryptoTransaction(transaction_number, amount, user_id) {
+    async createCryptoTransaction(crypto, bonus, transaction_number, amount, user_id) {
         const transaction = await CryptoTransactionModel.create({
             user: user_id,
             transaction_number,
             amount,
+            crypto,
+            bonus,
         });
 
         const transaction_with_user = await CryptoTransactionModel.findById(transaction._id).populate('user');
@@ -86,6 +89,52 @@ class CassaService {
     async getAllFakePushs() {
         const fakePushs = await TransactionModel.find().populate('user');
         return fakePushs.map(transaction => new TransactionDto(transaction));
+    }
+
+    async rejectTransaction(id) {
+        const transaction = await CryptoTransactionModel.findById(id);
+
+        transaction.status = 'reject'
+        transaction.save()
+
+        return new CryptoTransactionDto(transaction);
+    }
+
+    async acceptTransaction(id) {
+        const transaction = await CryptoTransactionModel.findById(id);
+
+        transaction.status = 'accept'
+        transaction.save()
+
+        const user = await UserModel.findById(transaction.user._id)
+
+        user.balance = user.balance + transaction.amount
+        user.save()
+
+        return new CryptoTransactionDto(transaction);
+    }
+
+    async rejectPull(id) {
+        const transaction = await PullModel.findById(id);
+
+        transaction.status = 'reject'
+        transaction.save()
+
+        return new CryptoTransactionDto(transaction);
+    }
+
+    async acceptPull(id) {
+        const transaction = await PullModel.findById(id);
+
+        transaction.status = 'accept'
+        transaction.save()
+
+        const user = await UserModel.findById(transaction.user._id)
+
+        user.balance = user.balance - transaction.amount
+        user.save()
+
+        return new CryptoTransactionDto(transaction);
     }
 }
 

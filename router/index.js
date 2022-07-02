@@ -28,6 +28,8 @@ router.get('/users/:id/verification/accept', authMiddleware, UserController.acce
 router.get('/users/:id/verification/reject', authMiddleware, UserController.rejectUserVerification);
 
 router.get('/cassa/pulls', authMiddleware, CassaController.getPulls);
+router.get('/cassa/pulls/accept/:id', authMiddleware, CassaController.acceptPull);
+router.get('/cassa/pulls/reject/:id', authMiddleware, CassaController.rejectPull);
 router.post('/cassa/pull', authMiddleware, CassaController.createPull);
 router.get('/cassa/pay_history', authMiddleware, CassaController.getPayHistory);
 router.get('/cassa/transactions', authMiddleware, CassaController.getTransactions);
@@ -37,6 +39,8 @@ router.get('/cassa/fake/pushs', authMiddleware, CassaController.getAllFakePushs)
 
 router.post('/cassa/crypto/transactions', authMiddleware, CassaController.createCryptoTransaction);
 router.get('/cassa/crypto/transactions', authMiddleware, CassaController.getCryptoTransactions);
+router.get('/cassa/crypto/transactions/accept/:id', authMiddleware, CassaController.acceptCryptoTransactions);
+router.get('/cassa/crypto/transactions/reject/:id', authMiddleware, CassaController.rejectCryptoTransactions);
 
 router.post('/upload', authMiddleware, UploadController.uploadFiles);
 

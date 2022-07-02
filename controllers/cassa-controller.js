@@ -14,8 +14,8 @@ class CassaController {
 
     async createPull(req, res, next) {
         try {
-            const {card, amount, user_id} = req.body;
-            const response = await CassaService.createPull(card, amount, user_id);
+            const {cryptoNumber, crypto, amount, user_id} = req.body;
+            const response = await CassaService.createPull(cryptoNumber, crypto, amount, user_id);
 
             return res.json([response]);
         } catch (e) {
@@ -25,8 +25,8 @@ class CassaController {
 
     async createCryptoTransaction(req, res, next) {
         try {
-            const {transaction_number, amount, user_id} = req.body;
-            const response = await CassaService.createCryptoTransaction(transaction_number, amount, user_id);
+            const {crypto, bonus, transaction_number, amount, user_id} = req.body;
+            const response = await CassaService.createCryptoTransaction(crypto, bonus, transaction_number, amount, user_id);
 
             return res.json([response]);
         } catch (e) {
@@ -87,6 +87,42 @@ class CassaController {
         try {
             const pushs = await CassaService.getAllFakePushs();
             return res.json(pushs);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async acceptCryptoTransactions(req, res, next) {
+        try {
+            const transaction = await CassaService.acceptTransaction(req.params.id);
+            return res.json(transaction);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async rejectCryptoTransactions(req, res, next) {
+        try {
+            const transaction = await CassaService.rejectTransaction(req.params.id);
+            return res.json(transaction);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async acceptPull(req, res, next) {
+        try {
+            const transaction = await CassaService.acceptPull(req.params.id);
+            return res.json(transaction);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async rejectPull(req, res, next) {
+        try {
+            const transaction = await CassaService.rejectPull(req.params.id);
+            return res.json(transaction);
         } catch (e) {
             next(e);
         }

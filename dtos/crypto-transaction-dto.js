@@ -4,6 +4,9 @@ module.exports = class CryptoTransactionDto {
     user;
     amount;
     transaction_number;
+    crypto;
+    bonus;
+    status;
     createdAt;
 
     constructor(model) {
@@ -11,6 +14,9 @@ module.exports = class CryptoTransactionDto {
         this.user = new UserDto(model.user);
         this.amount = model.amount;
         this.transaction_number = model.transaction_number;
+        this.crypto = model.crypto;
+        this.bonus = model.bonus;
+        this.status = model.status;
         this.createdAt = model.createdAt;
     }
 }

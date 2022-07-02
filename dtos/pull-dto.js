@@ -3,10 +3,11 @@ const TransactionDto = require("./transaction-dto");
 
 module.exports = class PullDto {
     id;
-    transaction;
+    // transaction;
     user;
     amount;
-    card;
+    cryptoNumber;
+    crypto;
     createdAt;
 
     constructor(model) {
@@ -14,7 +15,8 @@ module.exports = class PullDto {
         // this.transaction = new TransactionDto(model.transaction);
         this.user = new UserDto(model.user);
         this.amount = model.amount;
-        this.card = model.card;
+        this.cryptoNumber = model.cryptoNumber;
+        this.crypto = model.crypto;
         this.createdAt = model.createdAt;
     }
 }
