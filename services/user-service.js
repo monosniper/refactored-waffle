@@ -180,12 +180,9 @@ class UserService {
     }
 
     async resetPasswordByEmail(email) {
-        const user = await UserModel.findOne({email});
-
+        console.log(email)
         const newPassword = generatePassword(12)
-
-        user.password = await bcrypt.hash(newPassword, 1);
-        user.save();
+        const user = await UserModel.findOneAndUpdate({email}, {password: newPassword}, {new: true});
 
         try {
             await MailService.sendResetPasswordMail(user.email, user.username, newPassword)
