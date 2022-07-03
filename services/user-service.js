@@ -40,11 +40,16 @@ class UserService {
         };
     }
 
-    async login(username, password) {
-        const user = await UserModel.findOne({username});
+    async login(usernameOrEmail, password) {
+        let user = null;
+        const userByUsername = await UserModel.findOne({username: usernameOrEmail});
+        const userByEmail = await UserModel.findOne({email: usernameOrEmail});
+
+        if(userByUsername) user = userByUsername
+        if(userByEmail) user = userByEmail
 
         if (!user) {
-            throw ApiError.BadRequest('Пользователя с таким логином не существует');
+            throw ApiError.BadRequest('Пользователя с таким логином / почтой не существует');
         }
 
         const isPassEquals = await bcrypt.compare(password, user.password);
@@ -159,6 +164,23 @@ class UserService {
 
     async resetPassword(id) {
         const user = await UserModel.findById(id);
+
+        const newPassword = generatePassword(12)
+
+        user.password = await bcrypt.hash(newPassword, 1);
+        user.save();
+
+        try {
+            await MailService.sendResetPasswordMail(user.email, user.username, newPassword)
+        } catch (e) {
+            console.log(e)
+        }
+
+        return new UserDto(user);
+    }
+
+    async resetPasswordByEmail(email) {
+        const user = await UserModel.findById(email);
 
         const newPassword = generatePassword(12)
 

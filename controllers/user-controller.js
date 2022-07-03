@@ -110,6 +110,15 @@ class UserController {
         }
     }
 
+    async forget(req, res, next) {
+        try {
+            const user = await UserService.resetPasswordByEmail(req.params.email);
+            return res.json(user);
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async setPendingForVerification(req, res, next) {
         try {
             const user = await UserService.setPendingForVerification(req.params.id);
@@ -168,6 +177,7 @@ class UserController {
             next(e)
         }
     }
+
 }
 
 module.exports = new UserController();
