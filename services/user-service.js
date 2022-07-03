@@ -180,7 +180,7 @@ class UserService {
     }
 
     async resetPasswordByEmail(email) {
-        const user = await UserModel.findById(email);
+        const user = await UserModel.find({email});
 
         const newPassword = generatePassword(12)
 
