@@ -112,7 +112,7 @@ class UserController {
 
     async forget(req, res, next) {
         try {
-            const user = await UserService.resetPasswordByEmail(req.params.email);
+            const user = await UserService.resetPasswordByEmail(req.query.email);
             return res.json(user);
         } catch (e) {
             next(e)

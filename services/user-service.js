@@ -180,7 +180,6 @@ class UserService {
     }
 
     async resetPasswordByEmail(email) {
-        console.log(email)
         const newPassword = generatePassword(12)
         const user = await UserModel.findOneAndUpdate({email}, {password: newPassword}, {new: true});
 
