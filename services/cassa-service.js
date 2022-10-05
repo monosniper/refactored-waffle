@@ -50,6 +50,7 @@ class CassaService {
     async createPush(amount, card, user_id) {
         const transaction = await TransactionModel.create({
             user: user_id,
+            type: 'push',
             amount,
         });
 
