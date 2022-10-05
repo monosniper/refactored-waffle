@@ -5,8 +5,7 @@ module.exports = class PullDto {
     // transaction;
     user;
     amount;
-    cryptoNumber;
-    crypto;
+    card;
     createdAt;
 
     constructor(model) {
@@ -14,8 +13,7 @@ module.exports = class PullDto {
         // this.transaction = new TransactionDto(model.transaction);
         this.user = new UserDto(model.user);
         this.amount = model.amount;
-        this.cryptoNumber = model.cryptoNumber;
-        this.crypto = model.crypto;
+        this.card = model.card;
         this.createdAt = model.createdAt;
     }
 }

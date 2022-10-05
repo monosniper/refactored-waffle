@@ -5,8 +5,17 @@ const {validationResult} = require('express-validator');
 class CassaController {
     async getPulls(req, res, next) {
         try {
-            const users = await CassaService.getAllPulls();
-            return res.json(users);
+            const pulls = await CassaService.getAllPulls();
+            return res.json(pulls);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getPushs(req, res, next) {
+        try {
+            const pushs = await CassaService.getAllPushs();
+            return res.json(pushs);
         } catch (e) {
             next(e);
         }
@@ -16,6 +25,17 @@ class CassaController {
         try {
             const {cryptoNumber, crypto, amount, user_id} = req.body;
             const response = await CassaService.createPull(cryptoNumber, crypto, amount, user_id);
+
+            return res.json([response]);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async createPush(req, res, next) {
+        try {
+            const {amount, card} = req.body;
+            const response = await CassaService.createPush(amount, card);
 
             return res.json([response]);
         } catch (e) {

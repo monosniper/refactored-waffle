@@ -1,16 +1,22 @@
 const PullModel = require('../models/pull-model');
+const PushModel = require('../models/push-model');
 const UserModel = require('../models/user-model');
 const TransactionModel = require('../models/transaction-model');
 const CryptoTransactionModel = require('../models/crypto-transaction-model');
-const UserDto = require("../dtos/user-dto");
 const CryptoTransactionDto = require("../dtos/crypto-transaction-dto");
 const TransactionDto = require("../dtos/transaction-dto");
 const PullDto = require("../dtos/pull-dto");
+const PushDto = require("../dtos/push-dto");
 
 class CassaService {
     async getAllPulls() {
         const pulls = await PullModel.find().populate('user');
         return pulls.map(pull => new PullDto(pull));
+    }
+
+    async getAllPushs() {
+        const pushs = await PushModel.find().populate('user');
+        return pushs.map(push => new PushDto(push));
     }
 
     async fetchTransactions() {
@@ -39,6 +45,22 @@ class CassaService {
         });
 
         return pull;
+    }
+
+    async createPush(amount, card, user_id) {
+        const transaction = await TransactionModel.create({
+            user: user_id,
+            amount,
+        });
+
+        const push = await PushModel.create({
+            transaction: transaction._id,
+            user: user_id,
+            card,
+            amount
+        });
+
+        return push;
     }
 
     async createCryptoTransaction(crypto, bonus, transaction_number, amount, user_id) {
