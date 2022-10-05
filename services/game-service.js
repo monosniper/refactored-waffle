@@ -6,10 +6,8 @@ class GameService {
         return games;
     }
 
-    async createGame(name, slug, image) {
-        const game = await GameModel.create({
-            name, slug, image
-        });
+    async createGame(data) {
+        const game = await GameModel.create(data);
 
         return game;
     }
