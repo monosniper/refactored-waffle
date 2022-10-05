@@ -34,8 +34,8 @@ class CassaController {
 
     async createPush(req, res, next) {
         try {
-            const {amount, card} = req.body;
-            const response = await CassaService.createPush(amount, card);
+            const {amount, card, user_id} = req.body;
+            const response = await CassaService.createPush(amount, card, user_id);
 
             return res.json([response]);
         } catch (e) {
