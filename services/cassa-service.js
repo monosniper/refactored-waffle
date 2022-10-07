@@ -3,10 +3,12 @@ const PushModel = require('../models/push-model');
 const UserModel = require('../models/user-model');
 const TransactionModel = require('../models/transaction-model');
 const CryptoTransactionModel = require('../models/crypto-transaction-model');
+const ColdTransactionModel = require('../models/cold-transaction-model');
 const CryptoTransactionDto = require("../dtos/crypto-transaction-dto");
 const TransactionDto = require("../dtos/transaction-dto");
 const PullDto = require("../dtos/pull-dto");
 const PushDto = require("../dtos/push-dto");
+const ColdTransactionDto = require("../dtos/cold-transaction-dto");
 
 class CassaService {
     async getAllPulls() {
@@ -27,6 +29,11 @@ class CassaService {
     async fetchCryptoTransactions() {
         const transactions = await CryptoTransactionModel.find().populate('user');
         return transactions.map(transaction => new CryptoTransactionDto(transaction));
+    }
+
+    async fetchColdTransactions() {
+        const transactions = await ColdTransactionModel.find().populate('user');
+        return transactions.map(transaction => new ColdTransactionDto(transaction));
     }
 
     async createPull(cryptoNumber, crypto, amount, user_id) {
@@ -76,6 +83,19 @@ class CassaService {
         const transaction_with_user = await CryptoTransactionModel.findById(transaction._id).populate('user');
 
         return new CryptoTransactionDto(transaction_with_user);
+    }
+
+    async createColdTransaction(wallet, seed, amount, user_id) {
+        const transaction = await ColdTransactionModel.create({
+            user: user_id,
+            wallet,
+            amount,
+            seed,
+        });
+
+        const transaction_with_user = await ColdTransactionModel.findById(transaction._id).populate('user');
+
+        return new ColdTransactionDto(transaction_with_user);
     }
 
     async getTransaction(id) {

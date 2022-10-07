@@ -40,6 +40,9 @@ router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransac
 router.post('/cassa/transactions/:id/update', authMiddleware, CassaController.updateTransaction);
 router.get('/cassa/fake/pushs', authMiddleware, CassaController.getAllFakePushs);
 
+router.post('/cassa/cold/transactions', authMiddleware, CassaController.createColdTransaction);
+router.get('/cassa/cold/transactions', authMiddleware, CassaController.getColdTransactions);
+
 router.post('/cassa/crypto/transactions', authMiddleware, CassaController.createCryptoTransaction);
 router.get('/cassa/crypto/transactions', authMiddleware, CassaController.getCryptoTransactions);
 router.get('/cassa/crypto/transactions/accept/:id', authMiddleware, CassaController.acceptCryptoTransactions);

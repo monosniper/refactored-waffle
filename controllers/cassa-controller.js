@@ -1,6 +1,4 @@
 const CassaService = require('../services/cassa-service');
-const ApiError = require("../exceptions/api-error");
-const {validationResult} = require('express-validator');
 
 class CassaController {
     async getPulls(req, res, next) {
@@ -54,6 +52,17 @@ class CassaController {
         }
     }
 
+    async createColdTransaction(req, res, next) {
+        try {
+            const {wallet, seed, amount, user_id} = req.body;
+            const response = await CassaService.createColdTransaction(wallet, seed, amount, user_id);
+
+            return res.json([response]);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getTransactions(req, res, next) {
         try {
             const transactions = await CassaService.fetchTransactions();
@@ -67,6 +76,16 @@ class CassaController {
     async getCryptoTransactions(req, res, next) {
         try {
             const transactions = await CassaService.fetchCryptoTransactions();
+
+            return res.json([transactions]);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getColdTransactions(req, res, next) {
+        try {
+            const transactions = await CassaService.fetchColdTransactions();
 
             return res.json([transactions]);
         } catch (e) {
