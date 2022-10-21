@@ -9,7 +9,7 @@ const ApiError = require('../exceptions/api-error');
 const generatePassword = require('password-generator');
 
 class UserService {
-    async register(username, email, password) {
+    async register(username, email, password, firts_name='', last_name='') {
         if (await UserModel.findOne({username})) {
             throw ApiError.BadRequest('Пользователь с данным логином уже существует');
         }
@@ -21,14 +21,14 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 1);
         const activationLink = await uuid.v4();
 
-        const user = await UserModel.create({username, email, password: hashPassword, activationLink});
+        const user = await UserModel.create({username, email, password: hashPassword, activationLink, firts_name, last_name});
 
         // Send verification emails
-        try {
-            await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
-        } catch (e) {
-            
-        }
+        // try {
+        //     await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        // } catch (e) {
+        //
+        // }
 
         const userDto = new UserDto(user);
         const tokens = await TokenService.generateTokens({...userDto});
