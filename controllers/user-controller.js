@@ -172,9 +172,7 @@ class UserController {
 
     async payEvent(req, res, next) {
         try {
-
-            console.log(req);
-            return res.send('OK');
+            return res.send(process.env.VILLPAY_MERCHANT_KEY);
         } catch (e) {
             next(e)
         }
