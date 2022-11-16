@@ -188,7 +188,7 @@ class UserController {
                 cancel_url: 'https://www.makao777.com',
                 success_url: 'https://www.makao777.com/success',
                 ourform: 1,
-                merchant: process.env.REACT_APP_VILLPAY_MERCHANT_KEY,
+                merchant: process.env.VILLPAY_MERCHANT_KEY,
             }), {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
