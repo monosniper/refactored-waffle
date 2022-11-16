@@ -58,5 +58,6 @@ router.get('/player/songs', UploadController.getSongs);
 router.delete('/player/songs/:song', UploadController.deleteSong);
 
 router.post('/pay-event', UserController.payEvent);
+router.post('/get-checkout', UserController.getCheckout);
 
 module.exports = router;

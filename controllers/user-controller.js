@@ -2,6 +2,7 @@ const UserService = require('../services/user-service');
 const ApiError = require("../exceptions/api-error");
 const {validationResult} = require('express-validator');
 const fs = require("fs");
+const axios = require("axios");
 
 class UserController {
     async register(req, res, next) {
@@ -171,8 +172,34 @@ class UserController {
 
     async payEvent(req, res, next) {
         try {
+
             console.log(req);
-            return res.send('WMI_RESULT=OK');
+            return res.send('OK');
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getCheckout(req, res, next) {
+        try {
+            const data = await axios.post('https://vilpay.net/payment/process', new URLSearchParams({
+                currency_code: 'RUB',
+                amount: req.body.amount,
+                cancel_url: 'https://www.makao777.com',
+                success_url: 'https://www.makao777.com/success',
+                ourform: 1,
+                merchant: process.env.REACT_APP_VILLPAY_MERCHANT_KEY,
+            }), {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }).then((rs) => {
+                return rs.data.url
+            }).catch(err => {
+                console.log(err)
+            });
+
+            return res.send(data)
         } catch (e) {
             next(e)
         }
