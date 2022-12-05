@@ -183,10 +183,10 @@ class UserController {
         try {
 
             const body = {
-                "order_id": "123",
-                "currency": "USD",
+                "order_id": "Order-337",
+                "currency": "uah",
                 "wallet_type": "ecom",
-                "amount": 10,
+                "amount": 100,
                 "payway": "card"
             };
 
