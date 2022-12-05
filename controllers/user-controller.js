@@ -3,6 +3,7 @@ const ApiError = require("../exceptions/api-error");
 const {validationResult} = require('express-validator');
 const fs = require("fs");
 const axios = require("axios");
+const hmac = require("crypto-js/hmac-sha256");
 
 class UserController {
     async register(req, res, next) {
@@ -180,7 +181,6 @@ class UserController {
 
     async getCrosspayCheckout(req, res, next) {
         try {
-            const hmac = require('crypto-js/hmac-sha256');
 
             const body = {
                 order_id: '123',
