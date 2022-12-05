@@ -201,6 +201,10 @@ class UserController {
                 },
             }).then((rs) => {
                 console.log(rs)
+                console.log(rs.response)
+                console.log(rs.response.data.message)
+                console.log(rs.data)
+                console.log(rs.data.message)
                 return rs
             }).catch(err => {
                 console.log(err)
