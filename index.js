@@ -16,7 +16,7 @@ app.use(fileUpload({
     createParentPath: true
 }));
 app.use(cookieParser());
-const whitelist = ['https://'+process.env.CLIENT_URL, 'https://www.'+process.env.CLIENT_URL]
+const whitelist = ['https://'+process.env.CLIENT_URL, 'https://www.'+process.env.CLIENT_URL, 'https://react-casino-client.vercel.app']
 const corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
