@@ -60,4 +60,6 @@ router.delete('/player/songs/:song', UploadController.deleteSong);
 router.post('/pay-event', UserController.payEvent);
 router.post('/get-checkout', UserController.getCheckout);
 
+router.get('/get-crosspay-checkout', UserController.getCrosspayCheckout);
+
 module.exports = router;

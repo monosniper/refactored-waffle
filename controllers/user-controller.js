@@ -178,6 +178,28 @@ class UserController {
         }
     }
 
+    async getCrosspayCheckout(req, res, next) {
+        try {
+            const hmac = require('crypto-js/hmac-sha256');
+
+            const body = {
+                order_id: '123',
+                currency: 'uah',
+                wallet_type: 'ecom',
+                amount: 10,
+                payway: 'card',
+                // ...
+            };
+
+            const signature = hmac(JSON.stringify(body), process.env.CROSSPAY_SECRET_KEY)
+                .toString();
+
+            return res.json(signature)
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async getCheckout(req, res, next) {
         try {
             const data = await axios.post('https://vilpay.net/payment/process', new URLSearchParams({

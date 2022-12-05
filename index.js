@@ -16,10 +16,18 @@ app.use(fileUpload({
     createParentPath: true
 }));
 app.use(cookieParser());
-app.use(cors({
+const whitelist = ['https://'+process.env.CLIENT_URL, 'https://www.'+process.env.CLIENT_URL]
+const corsOptions = {
     credentials: true,
-    origin: process.env.CLIENT_URL
-}));
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+app.use(cors(corsOptions));
 app.use('/api', router);
 app.use(errorMiddleware);
 app.use(express.static('uploads'));
