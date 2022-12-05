@@ -183,12 +183,11 @@ class UserController {
         try {
 
             const body = {
-                order_id: '123',
-                currency: 'uah',
-                wallet_type: 'ecom',
-                amount: 10,
-                payway: 'card',
-                // ...
+                "order_id": "123",
+                "currency": "uah",
+                "wallet_type": "ecom",
+                "amount": 10,
+                "payway": "card"
             };
 
             const signature = hmac(JSON.stringify(body), process.env.CROSSPAY_SECRET_KEY)
