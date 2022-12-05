@@ -35,7 +35,7 @@ const corsOptions = {
 }
 app.options('/api', cors({
     credentials: true,
-    origin: 'makao777.com'
+    origin: 'https://makao777.com'
 }));
 // app.options('/api', cors(corsOptions));
 app.use('/api', router);
