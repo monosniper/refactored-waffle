@@ -193,7 +193,7 @@ class UserController {
             const signature = hmac(JSON.stringify(body), process.env.CROSSPAY_SECRET_KEY)
                 .toString();
 
-            return res.json(signature)
+            return res.json({signature, key: process.env.CROSSPAY_SECRET_KEY})
         } catch (e) {
             next(e)
         }
