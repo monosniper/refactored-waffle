@@ -30,7 +30,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/api', router);
 app.use(errorMiddleware);
-app.use(express.static('uploads'));
+app.use(express.static('uploads', {
+    setHeaders: function (res, path, stat) {
+        res.set('Content-Type', 'image/png')
+    }
+}));
 
 const start = async () => {
     try {
