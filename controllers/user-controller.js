@@ -184,7 +184,7 @@ class UserController {
 
             const body = {
                 "order_id": "123",
-                "currency": "uah",
+                "currency": "USD",
                 "wallet_type": "ecom",
                 "amount": 10,
                 "payway": "card"
