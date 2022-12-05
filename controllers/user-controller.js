@@ -193,13 +193,14 @@ class UserController {
             const signature = hmac(JSON.stringify(body), process.env.CROSSPAY_SECRET_KEY)
                 .toString();
 
-            const data = await axios.post('https://vilpay.net/payment/process', body, {
+            const data = await axios.post('https://api2.crosspay.net/api/v2/order/payin', body, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": process.env.CROSSPAY_PUBLIC_KEY,
                     "Signature": signature,
                 },
             }).then((rs) => {
+                console.log(rs)
                 return rs
             }).catch(err => {
                 console.log(err)
