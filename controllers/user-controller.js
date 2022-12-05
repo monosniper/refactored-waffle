@@ -205,7 +205,7 @@ class UserController {
                 console.log(err)
             });
 
-            return res.send(data)
+            return res.send(JSON.stringify(data))
 
             // return res.json({signature, key: process.env.CROSSPAY_SECRET_KEY})
         } catch (e) {
