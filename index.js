@@ -25,19 +25,14 @@ const whitelist = [
 const corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
-        console.log(origin)
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
+        callback(null, true)
     }
 }
-app.options('/api', cors({
-    credentials: true,
-    origin: 'https://makao777.com'
-}));
-// app.options('/api', cors(corsOptions));
+// app.options('/api', cors({
+//     credentials: true,
+//     origin: 'https://makao777.com'
+// }));
+app.options('/api', cors(corsOptions));
 app.use('/api', router);
 app.use(errorMiddleware);
 app.use(express.static('uploads', {
