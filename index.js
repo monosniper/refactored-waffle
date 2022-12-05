@@ -33,7 +33,7 @@ const corsOptions = {
         }
     }
 }
-app.use(cors(corsOptions));
+app.options('/api', cors(corsOptions));
 app.use('/api', router);
 app.use(errorMiddleware);
 app.use(express.static('uploads', {
