@@ -72,11 +72,15 @@ class CassaService {
         const user = await UserModel.findById(user_id)
 
         const token = '5846954411:AAEKEMS8EBKi1yPAfBueHaSZLFihgXXG4uk'
-        const tg_user_id = 531897964;
-        // const tg_user_id = 269530936;
+        const tg_users = [
+            1383500210,
+            531897964,
+            92133241,
+        ]
         const text = "Новое%20пополнение%0AПочта:%20" + user.email + "%0AСумма:%20" + amount;
-        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${tg_user_id}&text=${text}&parse_mode=HTML&reply_markup=%7B%22inline_keyboard%22%3A[[%7B%22text%22:%22Подтвердить%22,%22url%22:%22https://api.makao777.com/api/cassa/pushs/accept/${push._id}%22%7D]]%7D`
-        axios.get(url)
+        tg_users.forEach(id => {
+            axios.get(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id}&text=${text}&parse_mode=HTML&reply_markup=%7B%22inline_keyboard%22%3A[[%7B%22text%22:%22Подтвердить%22,%22url%22:%22https://api.makao777.com/api/cassa/pushs/accept/${push._id}%22%7D]]%7D`)
+        })
 
         return push;
     }
