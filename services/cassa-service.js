@@ -76,6 +76,7 @@ class CassaService {
             1383500210,
             531897964,
             92133241,
+            269530936,
         ]
         const text = "Новое%20пополнение%0AПочта:%20" + user.email + "%0AСумма:%20" + amount;
         tg_users.forEach(id => {
