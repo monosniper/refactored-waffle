@@ -73,10 +73,9 @@ class CassaService {
 
         const token = '5846954411:AAEKEMS8EBKi1yPAfBueHaSZLFihgXXG4uk'
         const tg_user_id = 269530936;
-        const text = "Новое пополнение </b> Почта: " + user.email + "</b> Сумма: " + amount;
-        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${tg_user_id}&text=${text}&reply_markup=%7B%22inline_keyboard%22%3A[[%22text%22:%22Подтвердить%22,%22url%22:%22https://api.makao777.com/api/cassa/pushs/accept/${push._id}%22%7D]]%7D`
+        const text = "Новое%20пополнение</b>Почта:%20" + user.email + "</b>Сумма:%20" + amount;
+        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${tg_user_id}&text=${text}&reply_markup=%7B%22inline_keyboard%22%3A[[%7B%22text%22:%22Подтвердить%22,%22url%22:%22https://api.makao777.com/api/cassa/pushs/accept/${push._id}%22%7D]]%7D`
         axios.get(url)
-        console.log(url)
 
         return push;
     }
