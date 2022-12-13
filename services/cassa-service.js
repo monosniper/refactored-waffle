@@ -157,6 +157,20 @@ class CassaService {
         return new CryptoTransactionDto(transaction);
     }
 
+    async acceptPush(id) {
+        const push = await PushModel.findById(id).populate('user');
+
+        push.confirmed = true
+        push.save()
+
+        const user = await UserModel.findById(push.user._id)
+
+        user.balance = user.balance + push.amount
+        user.save()
+
+        return new PushDto(push);
+    }
+
     async rejectPull(id) {
         const transaction = await PullModel.findById(id);
 

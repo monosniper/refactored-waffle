@@ -7,6 +7,7 @@ module.exports = class PullDto {
     amount;
     card;
     createdAt;
+    confirmed;
 
     constructor(model) {
         this.id = model._id;
@@ -14,6 +15,7 @@ module.exports = class PullDto {
         this.user = new UserDto(model.user);
         this.amount = model.amount;
         this.card = model.card;
+        this.confirmed = model.confirmed;
         this.createdAt = model.createdAt;
     }
 }

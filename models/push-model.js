@@ -5,6 +5,7 @@ const PushSchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
     card: {type: String},
     amount: {type: Number, required: true},
+    confirmed: {type: Boolean, default: false},
 }, {timestamps: true});
 
 module.exports = model('Push', PushSchema);

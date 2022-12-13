@@ -140,6 +140,15 @@ class CassaController {
         }
     }
 
+    async acceptPush(req, res, next) {
+        try {
+            const transaction = await CassaService.acceptPush(req.params.id);
+            return res.json(transaction);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async rejectCryptoTransactions(req, res, next) {
         try {
             const transaction = await CassaService.rejectTransaction(req.params.id);

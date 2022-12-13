@@ -30,6 +30,7 @@ router.get('/users/:id/verification/reject', authMiddleware, UserController.reje
 
 router.get('/cassa/pulls', authMiddleware, CassaController.getPulls);
 router.get('/cassa/pushs', authMiddleware, CassaController.getPushs);
+router.get('/cassa/pushs/accept/:id', authMiddleware, CassaController.acceptPush);
 router.get('/cassa/pulls/accept/:id', authMiddleware, CassaController.acceptPull);
 router.get('/cassa/pulls/reject/:id', authMiddleware, CassaController.rejectPull);
 router.post('/cassa/pull', authMiddleware, CassaController.createPull);
