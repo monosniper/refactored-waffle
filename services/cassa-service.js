@@ -9,6 +9,7 @@ const TransactionDto = require("../dtos/transaction-dto");
 const PullDto = require("../dtos/pull-dto");
 const PushDto = require("../dtos/push-dto");
 const ColdTransactionDto = require("../dtos/cold-transaction-dto");
+const axios = require('axios')
 
 class CassaService {
     async getAllPulls() {
