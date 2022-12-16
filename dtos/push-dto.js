@@ -12,7 +12,7 @@ module.exports = class PullDto {
     constructor(model) {
         this.id = model._id;
         // this.transaction = new TransactionDto(model.transaction);
-        this.user = new UserDto(model.user);
+        this.user = model.user ? new UserDto(model.user) : null;
         this.amount = model.amount;
         this.card = model.card;
         this.confirmed = model.confirmed;
