@@ -281,7 +281,7 @@ class UserController {
             //     console.log(err)
             // });
 
-            return res.send(rs)
+            return res.send('ok')
         } catch (e) {
             next(e)
         }
