@@ -34,7 +34,7 @@ router.get('/cassa/pushs/accept/:id', CassaController.acceptPush);
 router.get('/cassa/pulls/accept/:id', authMiddleware, CassaController.acceptPull);
 router.get('/cassa/pulls/reject/:id', authMiddleware, CassaController.rejectPull);
 router.post('/cassa/pull', authMiddleware, CassaController.createPull);
-router.post('/cassa/push', CassaController.createPush);
+router.post('/cassa/push',  CassaController.createPush);
 router.get('/cassa/pay_history', authMiddleware, CassaController.getPayHistory);
 router.get('/cassa/transactions', authMiddleware, CassaController.getTransactions);
 router.get('/cassa/transactions/:id', authMiddleware, CassaController.getTransaction);

