@@ -4,6 +4,7 @@ const {validationResult} = require('express-validator');
 const fs = require("fs");
 const axios = require("axios");
 const hmac = require("crypto-js/hmac-sha256");
+const { v4 } = require('uuid');
 
 class UserController {
     async register(req, res, next) {
@@ -243,7 +244,7 @@ class UserController {
                 processing_mode: PROCESSING_MODE_SALE,
                 paymethod: TRANS_TYPE_CREDIT_CARD,
                 redirect: redirect_url,
-                order_id: merchant_id + Date().now(),
+                order_id: merchant_id + v4(),
                 customer_ip: req.connection.remoteAddress,
                 first_name: fio.split(' ')[0],
                 last_name: fio.split(' ')[1],
