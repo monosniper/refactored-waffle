@@ -5,6 +5,7 @@ const fs = require("fs");
 const axios = require("axios");
 const hmac = require("crypto-js/hmac-sha256");
 const { v4 } = require('uuid');
+const FormData = require('form-data');
 
 class UserController {
     async register(req, res, next) {
@@ -264,7 +265,7 @@ class UserController {
             bodyFormData.append('expiry_yr', cardDate.split('/')[1])
             bodyFormData.append('expiry_mo', cardDate.split('/')[0])
 
-            const rs = await axios.post('https://processtxn.deltapay.biz/api/transact.php', bodyFormData, { headers: {"Content-Type": "multipart/form-data"} },)
+            const rs = await axios.post('https://processtxn.deltapay.biz/api/transact.php', bodyFormData)
 
             console.log("PAYMENT RESULT:")
             console.log(rs.data)
