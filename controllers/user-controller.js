@@ -255,7 +255,7 @@ class UserController {
                 state: "state",
                 zip: "12345",
                 country: "US",
-                currency: "USD",
+                currency: "CAD",
                 amount,
                 card_number: cardNumber,
                 card_type: 'visa',
@@ -265,7 +265,7 @@ class UserController {
             })
 
             console.log("PAYMENT RESULT:")
-            console.log(rs)
+            console.log(rs.data)
 
 
             // const data = await axios.post('https://vilpay.net/payment/process', new URLSearchParams({
