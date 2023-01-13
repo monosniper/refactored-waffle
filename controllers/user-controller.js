@@ -266,7 +266,6 @@ class UserController {
 
             console.log("PAYMENT RESULT:")
             console.log(rs)
-            console.log(rs.json())
 
 
             // const data = await axios.post('https://vilpay.net/payment/process', new URLSearchParams({
