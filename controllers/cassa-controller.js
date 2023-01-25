@@ -11,6 +11,32 @@ class CassaController {
         }
     }
 
+    async masterPayPayment(req, res, next) {
+        try {
+            const {amount, user_id} = req.body
+
+            const transaction = await CassaService.createTransaction(amount, user_id)
+
+            const API_KEY = "a98f7b19b30de5d71f67"
+
+            const rs = await axios.post('https://business.sandbox.gate.securemasterpay.com/api/v1/payments', {
+                "amount": amount,
+                "currency": "USD",
+                "redirectSuccessUrl": "https://www.makao-casino777.com/success-pay",
+                "orderNumber": transaction.id
+            }, {
+                headers: {
+                    "Authorization": "Bearer " + API_KEY
+                }
+            })
+            console.log(rs.data)
+            return res.json({pay_url: rs.data.processingUrl});
+        } catch (e) {
+            console.log(e)
+            next(e);
+        }
+    }
+
     async betterBroPayment(req, res, next) {
         try {
             const {amount, user_id} = req.body
