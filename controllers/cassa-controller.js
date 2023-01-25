@@ -71,7 +71,7 @@ class CassaController {
                 "fields": {
                     "cust_name": "Client name",
                     "cust_email": "test@test.com",
-                    "cust_mobile": "1234",
+                    "cust_mobile": "1234567890",
                     "upi_channel": "INTENT"
                 },
                 "point": {
