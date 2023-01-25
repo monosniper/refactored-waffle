@@ -13,6 +13,10 @@ class CassaController {
 
     async betterBroPayment(req, res, next) {
         try {
+            const {amount, user_id} = req.body
+
+            const transaction = await CassaService.createTransaction(amount, user_id)
+
             const API_KEY = "5ULKCyW0eaFIjpDjoJ8oNHW6Ka8lTcbJ"
             const POINT_ID = 22911
             const SERVICE_ID = 8912
@@ -21,7 +25,6 @@ class CassaController {
             const SUCCESS_URL = "https://india.makao-casino777.com/success"
 
             const customer_ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-            const transaction_id = 2
             const key = Date.now()
             const hash = md5(`${POINT_ID}${API_KEY}${key}`).toString()
 
@@ -32,9 +35,9 @@ class CassaController {
                     "hash": hash
                 },
                 "locale": "en",
-                "external_transaction_id": transaction_id,
+                "external_transaction_id": transaction.id,
                 "customer_ip_address": customer_ip,
-                "amount": req.body.amount,
+                "amount": amount,
                 "amount_currency": "INR",
                 "service_id": SERVICE_ID,
                 "account_id": ACCOUNT_ID,

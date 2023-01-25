@@ -87,6 +87,16 @@ class CassaService {
         return push;
     }
 
+    async createTransaction(amount, user_id) {
+        const transaction = await TransactionModel.create({
+            user: user_id,
+            type: 'push',
+            amount,
+        });
+
+        return new TransactionDto(transaction)
+    }
+
     async createCryptoTransaction(crypto, bonus, transaction_number, amount, user_id) {
         const transaction = await CryptoTransactionModel.create({
             user: user_id,
