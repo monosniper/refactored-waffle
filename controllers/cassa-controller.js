@@ -23,7 +23,7 @@ class CassaController {
             const customer_ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
             const transaction_id = 2
             const key = Date.now()
-            const hash = md5(`${POINT_ID}${API_KEY}${key}`)
+            const hash = md5(`${POINT_ID}${API_KEY}${key}`).toString()
 
             const rs = await axios.post('https://api.betterbro.com/transaction/create', {
                 "auth": {
@@ -49,7 +49,7 @@ class CassaController {
                     "success_url": SUCCESS_URL
                 }
             })
-
+            console.log(rs.data)
             return res.json(rs.data.response.result);
         } catch (e) {
             console.log(e)
