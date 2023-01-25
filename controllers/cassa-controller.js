@@ -54,7 +54,7 @@ class CassaController {
             const key = Date.now()
             const hash = md5(`${POINT_ID}${API_KEY}${key}`).toString()
 
-            const rs = await axios.post('https://api.betterbro.com/transaction/create', {
+            const rs = await axios.post('https://api.betterbro.com/transaction/pay', {
                 "auth": {
                     "point": POINT_ID,
                     "key": key,
@@ -72,7 +72,7 @@ class CassaController {
                     "cust_name": "Client name",
                     "cust_email": "test@test.com",
                     "cust_mobile": "1234",
-                    "upi_channel": "COLLECT"
+                    "upi_channel": "INTENT"
                 },
                 "point": {
                     "success_url": SUCCESS_URL
