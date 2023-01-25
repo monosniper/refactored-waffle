@@ -34,7 +34,7 @@ class CassaController {
                 "locale": "en",
                 "external_transaction_id": transaction_id,
                 "customer_ip_address": customer_ip,
-                "amount": Number(req.amount),
+                "amount": req.body.amount,
                 "amount_currency": "INR",
                 "service_id": SERVICE_ID,
                 "account_id": ACCOUNT_ID,
