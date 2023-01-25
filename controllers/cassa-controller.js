@@ -52,6 +52,7 @@ class CassaController {
 
             return res.json(rs.data.response.result);
         } catch (e) {
+            console.log(e)
             next(e);
         }
     }
