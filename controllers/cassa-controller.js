@@ -39,13 +39,13 @@ class CassaController {
 
     async betterBroPayment(req, res, next) {
         try {
-            const {amount, user_id} = req.body
+            const {amount, user_id, withdrawal} = req.body
 
             const transaction = await CassaService.createTransaction(amount, user_id)
 
             const API_KEY = "5ULKCyW0eaFIjpDjoJ8oNHW6Ka8lTcbJ"
             const POINT_ID = 22911
-            const SERVICE_ID = 8912
+            const SERVICE_ID = withdrawal ? 8913 : 8912
             const ACCOUNT_ID = 20801
             const WALLET_ID = 25412
             const SUCCESS_URL = "https://india.makao-casino777.com/success"
@@ -53,6 +53,22 @@ class CassaController {
             const customer_ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
             const key = Date.now()
             const hash = md5(`${POINT_ID}${API_KEY}${key}`).toString()
+
+            const fields = withdrawal ? {
+                "TxnMode": "IMPS",
+                "Remark": "1231231231231231231",
+                "IFSC": "HDFC0001819",
+                "AccountNo": "50200057626038",
+                "AccHolderName": "Subash Naik",
+                "BeneficiaryMobile": "9124080243",
+                "BeneficiaryEmail": "test@mail.com",
+                "BeneficiaryAddress": "NA"
+            } : {
+                "cust_name": "Client name",
+                "cust_email": "test@test.com",
+                "cust_mobile": "1234567890",
+                "upi_channel": "INTENT"
+            }
 
             const rs = await axios.post('https://api.betterbro.com/transaction/pay', {
                 "auth": {
@@ -68,12 +84,7 @@ class CassaController {
                 "service_id": SERVICE_ID,
                 "account_id": ACCOUNT_ID,
                 "wallet_id": WALLET_ID,
-                "fields": {
-                    "cust_name": "Client name",
-                    "cust_email": "test@test.com",
-                    "cust_mobile": "1234567890",
-                    "upi_channel": "INTENT"
-                },
+                "fields": fields,
                 "point": {
                     "success_url": SUCCESS_URL
                 }
