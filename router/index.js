@@ -66,6 +66,6 @@ router.get('/get-crosspay-checkout', UserController.getCrosspayCheckout);
 router.post('/trusty-callback', CassaController.trustyCallback);
 
 router.post('/betterbro-payment', CassaController.betterBroPayment);
-router.post('/masterpay-payment', CassaController.masterPayPayment);
+router.post('/securemasterpay-payment', CassaController.masterPayPayment);
 
 module.exports = router;
