@@ -21,7 +21,7 @@ class CassaController {
             const API_KEY = "f8aeeb749c46f0b50269"
 
             // const url = 'https://business.sandbox.gate.securemasterpay.com/api/v1/payments'
-            const url = 'https://business.gate.securemasterpay.com/api/v1/payments'
+            const url = 'https://business.gate.securemasterpay.com/api/v1/p2p_pay'
 
             const rs = await axios.post(url, {
                 "amount": amount,
