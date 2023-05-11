@@ -19,10 +19,13 @@ class CassaController {
 
             const API_KEY = "a98f7b19b30de5d71f67"
 
-            const rs = await axios.post('https://business.sandbox.gate.securemasterpay.com/api/v1/payments', {
+            // const url = 'https://business.sandbox.gate.securemasterpay.com/api/v1/payments'
+            const url = 'https://business.gate.securemasterpay.com'
+
+            const rs = await axios.post(url, {
                 "amount": amount,
                 "currency": "USD",
-                "redirectSuccessUrl": "https://www.makao-casino777.com/success-pay",
+                "redirectSuccessUrl": "https://www.makao777.ru/success-pay",
                 "orderNumber": transaction.id
             }, {
                 headers: {
