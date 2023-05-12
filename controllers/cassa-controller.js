@@ -25,7 +25,7 @@ class CassaController {
 
             const rs = await axios.post(url, {
                 "amount": amount,
-                "currency": "USD",
+                "currency": "RUB",
                 "redirectSuccessUrl": "https://www.makao777.ru/success-pay",
                 "orderNumber": transaction.id
             }, {
